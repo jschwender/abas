@@ -1,0 +1,1 @@
+This can be used to verify an input in an IBAN GUI-field in ABAS. It checks the IBAN for conformance, not an online-check.
