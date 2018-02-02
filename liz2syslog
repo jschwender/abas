@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+#  Beobachtung des Verlaufs der Lizenzbelegung in syslog
+#   muss als Benutzer s3 mit login shell aufgerufen werden
+# Parameter: Anzahl Belegte Lizenzen, Anzahl Anmeldungen, Maximalwert der Anmeldungen pro Benutzer
+while true
+do 
+    LI=$(lizinfo.sh -l)
+    if [ "$LI" = "" ]
+    then
+	ANZ=0
+	ANM=0
+	MAX=0
+    else
+	ANZ=$(echo "$LI"|wc -l)
+        ANM=$(echo "$LI"|awk '{ sum += $2} END { print sum }')
+	MAX=$(echo "$LI"|awk -v max=0 '{if ($2>max) {want=$2; max=$2}} END {print want} ') #'
+    fi
+#    echo "$ANZ $ANM"'
+    logger -p local0.notice -t ABASlizenz "$ANZ $ANM $MAX"
+    #"$(lizinfo.sh -a|head -4|awk '{ printf "%2.2d;", $3 }')"
+    sleep 10
+done
