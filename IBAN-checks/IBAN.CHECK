@@ -1,0 +1,30 @@
+.weiter START
+2017-11-27 J. Schwender, Ferrotec Europe GmbH
+  Als FeldaustrittsprÅfung fÅr IBAN.
+
+  benîtigt fÅr Systemaufruf werden: bc, egrep und andere Kommandozeilentools
+
+                                     /--<ok>----> keine Ausgabe (exit 0)
+  IBAN         )--->  bash script --|
+                                     \--<Fehler> ---> Fehlerausgabe mit Fehlercode (exit 1,2,3)
+
+  Eine LEERE IBAN fÅhrt zu keiner Pr√ºfung und zu <ok>
+
+!START
+.ende ? iban=""
+.art text xtcmd
+.art int xiRetVal
+..
+.eingabe ARB
+..
+.formel U|xtcmd = 'xarb' + "iban-check.sh "+ 'G|dblquote'+'iban'+'G|dblquote'
+.system 'U|xtcmd'
+.formel xiRetVal='G|status'
+.formel U|xtcmd="hat eine ungÅltige LÑnge"             ? xiRetVal=1
+.formel U|xtcmd="hat einen ungÅltigen LÑndercode"      ? xiRetVal=2
+.formel U|xtcmd="hat eine ungÅltige PrÅfsume"          ? xiRetVal=3
+.ende . ? G|mehr
+.box
+Diese IBAN 'U|xtcmd' !!!!
+Bitte PrÅfen.
+.ende .
