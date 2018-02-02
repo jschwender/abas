@@ -1,0 +1,69 @@
+.. EFOP MAILADDRTEST UNTERPROGRAMM
+.. Dieses EFOP prÅft die MailAdresse auf GÅltigkeit
+..
+.. 2013-10-15, Joachim Schwender
+.. Version: 1.0 Status: produktiv
+.. Es findet zuerst eine PrÅfung nach typischen Fehlern vor,
+.. um spezifische Fehlermeldungen ausgeben zu kînnen.
+.. leer ist OK
+.. erlaubte Zeichen nach RFC 5322: A-Za-z0-9.!#$%&'*+-/=?^_`{|}~. 
+..  FÅr ABAS wird dieser Zeichensatz weiter eingeschrÑnkt
+.weiter OK ? T|xttele1=""
+..
+.text xtnte 'bspr' / keinesfalls verwenden!!
+.formel T|xt=xtnte
+.weiter FEHLER ? T|xttele1/"*\/*"
+..
+.text xtnte 'bspr' @ ist nur einmal zur Abtrennung der DomÑne zulÑssig!!
+.formel T|xt=xtnte
+.weiter FEHLER ? T|xttele1/"*@*@*"
+.text xtnte 'bspr' Die Adresse darf nicht mit einem @ beginnen oder enden !!
+.formel T|xt=xtnte
+.weiter FEHLER ? T|xttele1/"/@/*"
+.weiter FEHLER ? T|xttele1/"*/@/"
+
+.text xtnte 'bspr' Bitte keine Leerzeichen !!
+.formel T|xt=xtnte
+.weiter FEHLER ? T|xttele1/"* *"
+..
+.text xtnte 'bspr' Die DomÑne muss mindestens ein . enthalten !!
+.formel T|xt=xtnte
+.weiter FEHLER ? _T|xttele1/"*@*.*"
+..
+.text xtnte 'bspr' Die DomÑne bitte ausschliesslich in Kleinbuchstaben !!
+.formel T|xt=xtnte
+.weiter FEHLER ? T|xttele1/"*@*(A-Z)*"
+..
+.text xtnte 'bspr' Die Adresse darf nicht mit einem Punkt beginnen oder enden !!
+.formel T|xt=xtnte
+.weiter FEHLER ? T|xttele1/"/./*"
+.weiter FEHLER ? T|xttele1/"*/./"
+..
+!A: es wird immer ein Zeichen Abgeschnitten
+.formel T|xttele2 = xttele1 << 1
+.formel T|xttele1 = xttele1 << -1
+.. darf nur bestimmte Zeichen enthalten
+.text xtnte 'bspr' Unerlaubtes Zeichen
+.text xtnte2 'bspr' in der Nummer!
+.formel T|xt=xtnte + " " + T|xttele2 + " " + xtnte2
+.weiter AOK ? T|xttele2/"(a-z)"
+.weiter AOK ? T|xttele2/"(0-9)"
+.weiter AOK ? T|xttele2/"(A-Z)"
+.weiter AOK ? T|xttele2/"/@.!#$%&+-=?_/"
+.weiter FEHLER
+!AOK
+.weiter A ? T|xttele1<>""
+..
+!OK
+.weiter 
+..
+!FEHLER
+.text xtnte9 'bspr' Beachten Sie die RFC 5322 fÅr die Angabe von Mailadressen:
+.box
+'xt'
+'xtnte9'
+Adresse@domain   (Gross- Kleinschreibung bei Adresse beachten!)
+fÅr ABAS gelten weitere EinschrÑnkungen:
+   Kein Zeichen-Escaping, keine Spezialzeichen #^|
+.. im Feld Stehenbleiben
+.ende 1
