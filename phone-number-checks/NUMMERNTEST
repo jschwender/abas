@@ -1,0 +1,75 @@
+.. EFOP NUMMERNTEST UNTERPROGRAMM
+.. Dieses EFOP prÅft die Faxnummer auf GÅltigkeit, also auf öbereinstimmung 
+.. mit der DIN 5008 (internat.)
+.. und wird aus FAXNUM und TELNUM aufgerufen
+..
+.. 2005-11-29, Joachim Schwender
+.. 2007-07-26, Leerzeichen nach + abgefangen
+.. Version: 1.0.1, Status: produktiv
+.. Es findet zuerst eine PrÅfung nach typischen Fehlern vor,
+.. um spezifische Fehlermeldungen ausgeben zu kînnen.
+.. leer ist OK
+.weiter OK ? T|xttele1=""
+..
+.text xtnte 'bspr' / keinesfalls verwenden!!
+.formel T|xt=xtnte
+.weiter FEHLER ? T|xttele1/"*\/*"
+..
+.text xtnte 'bspr' - ist nur einmal zur Abtrennung der Durchwahl zulÑssig!!
+.formel T|xt=xtnte
+.weiter FEHLER ? T|xttele1/"*-*-*"
+.text xtnte 'bspr' Bitte keine Leerzeichen vor oder nach dem Durchwahltrenner - !!
+.formel T|xt=xtnte
+.weiter FEHLER ? T|xttele1/"* -*"
+.weiter FEHLER ? T|xttele1/"*- *"
+..
+.text xtnte 'bspr' Die Nummer sollte mit + beginnen gefolgt von einer Ziffer!!
+.formel T|xt=xtnte
+.weiter FEHLER ? _T|xttele1/"+(0-9)*"
+..
+.text xtnte 'bspr' Es gibt gem. ITU E.164 maximal dreistellige internationalen Vorwahlen!!!
+.formel T|xt=xtnte
+.weiter FEHLER ? T|xttele1/"+(0-9)(0-9)(0-9)(0-9) *"
+.weiter FEHLER ? T|xttele1/"+(0-9)(0-9)(0-9)(0-9)(0-9) *"
+.weiter FEHLER ? T|xttele1/"+(0-9)(0-9)(0-9)(0-9)(0-9)(0-9) *"
+.weiter FEHLER ? T|xttele1/"+(0-9)(0-9)(0-9)(0-9)(0-9)(0-9)(0-9) *"
+..
+.text xtnte 'bspr' Klammer ist nicht erlaubt, keine Nummern in Klammern!!
+.formel T|xt=xtnte
+.weiter FEHLER ? T|xttele1/"*\(*"
+.weiter FEHLER ? T|xttele1/"*\)*"
+..
+.text xtnte 'bspr' Trennen Sie die Nummer in Int. Vorwahl Vorwahl Rufnummer mit Leerzeichen
+.formel T|xt=xtnte
+.weiter FEHLER ? _T|xttele1/"* *"
+..
+.text xtnte 'bspr' Benutzen Sie keine doppelten Leerzeichen!
+.formel T|xt=xtnte
+.weiter FEHLER ? T|xttele1/"*  *"
+..
+!A: es wird immer ein Zeichen Abgeschnitten
+.formel T|xttele2 = xttele1 << 1
+.formel T|xttele1 = xttele1 << -1
+.. darf nur bestimmte Zeichen enthalten
+.text xtnte 'bspr' Unerlaubtes Zeichen
+.text xtnte2 'bspr' in der Nummer!
+.formel T|xt=xtnte + " " + T|xttele2 + " " + xtnte2
+.weiter AOK ? T|xttele2=" "
+.weiter AOK ? T|xttele2/"(09)"
+.weiter AOK ? T|xttele2="-"
+.weiter AOK ? T|xttele2="+"
+.weiter FEHLER
+!AOK
+.weiter A ? T|xttele1<>""
+..
+!OK
+.weiter
+..
+!FEHLER
+.text xtnte9 'bspr' Beachten Sie die DIN 5008 fÅr die Angabe von Telefonnummern in internationaler Schreibweise (FQTN):
+.box
+'xt'
+'xtnte9'
++[INT] [BEREICH] [NUMMER]-[DURCHWAHL]
+.. im Feld Stehenbleiben
+.ende 1

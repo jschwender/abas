@@ -1,0 +1,16 @@
+.weiter ANFANG
+EFOP TELNUM
+Dieses EFOP prÅft die Faxnummer auf GÅltigkeit, also auf öbereinstimmung 
+mit der DIN 5008 (internat.)
+
+2005-11-29, Joachim Schwender
+2007-07-26, Leerzeichen nach + abgefangen
+Version: 1.0.1, Status: produktiv
+
+Es findet zuerst eine PrÅfung nach typischen Fehlern vor,
+um spezifische Fehlermeldungen ausgeben zu kînnen.
+!ANFANG
+.art text xt xttele1 xttele2
+.. Telefonnummer holen
+.formel T|xttele1=M|tele2
+.eingabe NUMMERNTEST
