@@ -1,0 +1,9 @@
+You may observe older user processes in ABAS.
+This can be caused by network interruption.
+The process keep running and blocks licence. Over time this causes reduced number of free licences,
+and users get access refused.
+
+This script can be run periodically from cron. It looks at the current user processes
+extracts the age of them, and kills all those that exceed a defined age limit.
+
+This intervention in mission critiical processes is properly documented via syslog.
