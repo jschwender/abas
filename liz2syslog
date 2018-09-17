@@ -2,25 +2,17 @@
 #
 #  Beobachtung des Verlaufs der Lizenzbelegung in syslog
 #   muss als Benutzer s3 mit login shell aufgerufen werden
-# Parameter: Anzahl Belegte Lizenzen, Anzahl Anmeldungen, Maximalwert der Anmeldungen pro Benutzer
+# Parameter: Anzahl Belegte Lizenzen, Anzahl Anmeldungen
 ALT='000'
-while true
-do 
-    LI=$(lizinfo.sh -l)
-    if [ "$LI" = "" ]
+ProzessDatei='/data/prod/abas/ferrotec/pa.dat'
+while true                                                        # run as daemon (until it gets killed)
+do
+    inotifywait -q -e modify --format "%w%f" "$ProzessDatei"      # wait until this file gets modified
+    ANM=$(/usr/bin/grep "GUI" "$ProzessDatei" |/usr/bin/sort --key 7 |/usr/bin/wc -l)        # as soon as it was modified, check the login numbers
+    ANZ=$(/usr/bin/grep "GUI" "$ProzessDatei" |/usr/bin/cut -f 7|/usr/bin/sort --uniq|/usr/bin/wc -l)
+    if [ "$ALT" -ne "$ANZ$ANM" ]            # log to syslog only if the login number have changed, it could be a change in non-GUI entries
     then
-	ANZ=0
-	ANM=0
-	MAX=0
-    else
-	ANZ=$(echo "$LI"|wc -l)
-	ANM=$(echo "$LI"|awk '{ sum += $2} END { print sum }')
-	MAX=$(echo "$LI"|awk -v max=0 '{if ($2>max) {want=$2; max=$2}} END {print want} ') #'
+	ALT="$ANZ$ANM"                                                # save the numbers for next comparison
+	logger -p local0.notice -t ABASlizenz "$ANZ $ANM"             # and send login numbers to syslog
     fi
-    if [ "$ALT" -ne "$ANZ$ANM$MAX" ]
-    then
-	ALT="$ANZ$ANM$MAX"
-	logger -p local0.notice -t ABASlizenz "$ANZ $ANM $MAX"
-    fi
-    sleep 10
 done
