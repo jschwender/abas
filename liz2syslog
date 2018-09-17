@@ -4,7 +4,7 @@
 #   muss als Benutzer s3 mit login shell aufgerufen werden
 # Parameter: Anzahl Belegte Lizenzen, Anzahl Anmeldungen
 ALT='000'
-ProzessDatei='/data/prod/abas/ferrotec/pa.dat'
+ProzessDatei='/data/prod/abas/ ..your mandant../pa.dat'
 while true                                                        # run as daemon (until it gets killed)
 do
     inotifywait -q -e modify --format "%w%f" "$ProzessDatei"      # wait until this file gets modified
