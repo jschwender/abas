@@ -11,7 +11,7 @@ MaxAlter=$((3600*36))  # Maximales Alter eines Prozesses
 # diese Prozesskontendatei wird von ABAS permanent aktualisiert
 # direkt darauf zu zugreifen geht schneller als über su + lizinfo.sh
 # Die Gesamtlaufzeit geht von 1,8 s auf 0,7 s zurück
-Aproz=/data/prod/abas/ferrotec/pa.dat          # PFAD unbedingt für den Mandanten anpassen !!!
+Aproz=/data/prod/abas/...mandant../pa.dat          # PFAD unbedingt für den Mandanten anpassen !!!
 AprozTemp=/tmp/abas-prozesse
 # Die Datei erst mal nur kopieren
 cp -f "$Aproz" "$AprozTemp"
