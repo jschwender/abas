@@ -1,0 +1,28 @@
+Dieses EFOP prüft MailAdress-Eingaben auf Gültigkeit
+
+2013-10-15, Joachim Schwender
+
+Version: 1.0 Status: produktiv
+
+ Es findet zuerst eine Prüfung nach typischen Fehlern vor,
+ um spezifische Fehlermeldungen ausgeben zu können.
+ leer ist OK
+ erlaubte Zeichen nach RFC 5322: A-Za-z0-9.!#$%&'*+-/=?^_`{|}~. 
+  Für ABAS wird dieser Zeichensatz weiter eingeschränkt.
+  es wird keine vollständige, strenge Prüfung vorgenommen, da diese sehr komplex ist.
+  Die Prüfung ist vereinfacht:
+    Nur ein @ Zeichen darf vorhanden sein.
+    @ darf nicht am Anfang oder am Ende stehen.
+    . darf nicht am Anfang oder am Ende stehen.
+    Leerzeichen sind nicht erlaubt.
+    Die Domäne muss mindesten ein "." enthalten
+    Die Domäne muss in kleinbuchstaben sein.
+    
+ Theoretisch könnten damit RFC gültige Adressen abgewiesen werden,
+ in der Praxis sind aber zum Beispiel Adressen mit 2 @ Zeichen
+ extrem rar, und bei uns noch nie vorgekommen. Der Übliche
+ Fall, dass Felder missbräuchlich unstrukturiert befüllt werden
+ (Telefonnummer in Mail-Adressfeld…)
+ kann damit verhindert werden.
+  
+ Es werden immer Fehlermeldungen ausgegeben mit denen der Anwender etwas anfangen kann.
