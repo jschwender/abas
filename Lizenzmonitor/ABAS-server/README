@@ -1,0 +1,33 @@
+ABAS-liz2zabbix
+===============
+
+On the Zabbix-server:
+requires: zabbix-server
+
+Create an item of typ "trap", with the key "abaslizenzen".
+Data format is unsigned number.
+It is recommended to restrict the hosts that are allowed to send.
+TLS encryption may be used, if necessary.
+
+---------------------
+On the ABAS-server:
+requires: zabbix-agent2, zabbix-sender, inotify-tools
+
+Depending on what start system you have, install either 
+the file from  etc/init.d/  or  etc/systemd/  directory to your system.
+Install the files from usr/ to the system.
+
+Adjust the path of "Prozessdatei" in /usr/local/sbin/liz2zabbix  to match your abas-setup
+Chack also if the program paths (cut, grep…) in this file are matching your system's settings.
+
+start the daemon by 
+
+   systemctl start abas-liz2zabbix
+
+for up to date systems, or 
+
+   /etc/init.d/abasliz start
+
+for legacy systems.
+
+

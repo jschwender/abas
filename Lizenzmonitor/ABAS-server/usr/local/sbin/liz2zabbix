@@ -1,0 +1,30 @@
+#!/bin/sh
+#
+#  Purpose: Monitoring the number of ABAS licenses in use.
+#  Why: Get qualified decision-making basis for purchasing further licenses.
+#
+#  daemon that is started with abas on the abas machine.
+#  ABAS holds information on licenses in use in a process file. Each operation in ABAS
+#  that locks a license is written to this file.
+#
+#  What this daemon does: This process file is watched by inotify and for every change of the file,
+#  causes an action. The action is to check if the change relevant or not, means was caused by a change
+#  of license number or not. If the number of licenses was changed, the number of used licenses is
+#  reported to Zabbix monitoring system.
+#
+#  requires:  zabbix-agent2, zabbix-sender, inotify-tools
+#
+#  ©2020, J. Schwender
+#
+ALT='000'
+ProzessDatei='/data/prod/abas/ferrotec/pa.dat'
+while true
+do
+    inotifywait -q -e modify --format "%w%f" "$ProzessDatei"           # we wait until the file was changed
+    ANZ=$(/usr/bin/grep "GUI" "$ProzessDatei" |/usr/bin/cut -f 7|/usr/bin/sort --uniq|/usr/bin/wc -l)        # check the number of GUI-logins, takes about 5…10 ms
+    if [ "$ALT" -ne "$ANZ" ]            # action only if  number has changed compared to the previous file change number
+    then
+	echo "zabbix_sender -c /etc/zabbix/zabbix_agent2.conf -k abaslizenzen -o $ANZ"       # takes about 1 ms
+	ALT="$ANZ"                                                # save the number for next check
+    fi
+done

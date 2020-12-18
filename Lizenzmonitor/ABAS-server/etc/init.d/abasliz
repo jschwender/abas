@@ -1,0 +1,51 @@
+#!/bin/bash
+#  requires: zabbix-agent2, zabbix-sender (tested with version 5.0)
+#  chkconfig: - 98 01
+# define s3 user
+S3USER=s3
+
+# define and read other vars
+S3HOME=$(eval echo ~${S3USER})
+cd "${S3HOME}" || exit; eval "$(sh denv.sh)"
+KIND="ABAS Lizenzlogging ($S3USER) server"
+
+
+mstart() {
+  echo -e "Starting $KIND"
+  su $S3USER -c "$BASE_MANDANTDIR/s3/liz2zabbix &"
+}
+
+mstop() {
+  echo -e "Shutting down $KIND"
+  killall -9 liz2zabbix
+}
+
+restart() {
+        stop
+        start
+}
+
+status() {
+  echo -e "Status of $KIND nicht verfügbar"
+}
+
+case "$1" in
+  start)
+        mstart
+        ;;
+  stop)
+        mstop
+        ;;
+  restart)
+        restart
+        ;;
+  status)
+        status
+        ;;
+  *)
+        echo $"Usage: $0 {init|start|stop|restart|status}"
+        exit 2
+esac
+
+exit $?
+
