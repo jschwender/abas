@@ -1,0 +1,14 @@
+[Desktop Entry]
+Categories=GNOME;GTK;Utility;TextEditor;
+X-GNOME-DocPath=gedit/index.xml
+Encoding=UTF-8
+Exec=gedit %U --encoding IBM850
+GenericName=Texteditor (ABAS FOP)
+Icon=accessories-text-editor
+InitialPreference=8
+MimeType=text/x-abasfop;
+Name=gedit (ABAS FOP)
+OnlyShowIn=GNOME;
+Terminal=false
+Type=Application
+X-DCOP-ServiceType=Multi
