@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="text/x-abasfop-de">
+  <sub-class-of type="text/x-abasfop"/>
+    <comment>ABAS FOP code german</comment>
+    <comment xml:lang="de">ABAS FOP Skript deutsch</comment>
+    <magic priority="92">
+	<match type="string" value="..!interpreter german" offset="0"/>
+	<match type="string" value="..!interpreter declaration german" offset="0"/>
+	<match type="string" value=".weiter" offset="0"/>
+	<match type="string" value=".WEITER" offset="0"/>
+	<match type="string" value=".art" offset="0"/>
+    </magic>
+  </mime-type>
+</mime-info>

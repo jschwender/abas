@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="text/x-abasfop">
+  <sub-class-of type="text/plain"/>
+    <comment>ABAS FOP code</comment>
+    <comment xml:lang="bg">Скрипт на ABAS FOP </comment>
+    <comment xml:lang="cs">Skript v ABAS FOP u</comment>
+    <comment xml:lang="de">ABAS FOP -Skript</comment>
+    <comment xml:lang="el">πρόγραμμα εντολών ABAS FOP </comment>
+    <comment xml:lang="eo">ABAS FOP -skripto</comment>
+    <comment xml:lang="es">Script en ABAS FOP </comment>
+    <comment xml:lang="eu">ABAS FOP  script-a</comment>
+    <comment xml:lang="fi">ABAS FOP -komentotiedosto</comment>
+    <comment xml:lang="fr">script ABAS FOP </comment>
+    <comment xml:lang="hu">ABAS FOP -parancsfájl</comment>
+    <comment xml:lang="it">Script ABAS FOP </comment>
+    <comment xml:lang="ja">ABAS FOP  スクリプト</comment>
+    <comment xml:lang="ko">ABAS FOP  스크립트</comment>
+    <comment xml:lang="ms">Skrip ABAS FOP </comment>
+    <comment xml:lang="nb">ABAS FOP -skript</comment>
+    <comment xml:lang="nl">ABAS FOP -script</comment>
+    <comment xml:lang="nn">ABAS FOP -skript</comment>
+    <comment xml:lang="no">ABAS FOP -skript</comment>
+    <comment xml:lang="pl">Skrypt ABAS FOP a</comment>
+    <comment xml:lang="pt">'script' ABAS FOP </comment>
+    <comment xml:lang="pt_BR">Script ABAS FOP </comment>
+    <comment xml:lang="sq">Script ABAS FOP </comment>
+    <comment xml:lang="sr">Питон скрипта</comment>
+    <comment xml:lang="sv">ABAS FOP skript</comment>
+    <comment xml:lang="uk">Сценарій на мові ABAS FOP </comment>
+    <comment xml:lang="zh_CN">ABAS FOP  脚本</comment>
+    <magic priority="90">
+	<match type="string" value=".." offset="0"/>
+	<match type="string" value="..!interpreter" offset="0"/>
+    </magic>
+  </mime-type>
+</mime-info>
