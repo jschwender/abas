@@ -1,1 +1,14 @@
+Syntax highlighting for ABAS FOP script language in english and german
+for the use of gnome editor with gtk-sourceview-4. Older versions are not supported.
+
+On a debian system do:
+Install the .lang files into /usr/share/gtksourceview-4/language-specs
+Install mime .xml definition files into /usr/share/mime/packages
+and run as root
+        update-mime-database /usr/share/mime
+Install .desktop file into /usr/share/applications
+
+It has all the keywords, commands and funtions (as og abas version 2020),
+but not all combinations of options.
+
 
